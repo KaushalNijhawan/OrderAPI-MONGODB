@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins="*")
@@ -17,10 +18,10 @@ public class SpringServiceOrderApplication {
 		SpringApplication.run(SpringServiceOrderApplication.class, args);
 	}
 
-	@RequestMapping("/orderApi/createOrder/")
-	public Order createUser() {
-		int id =(int)(Math.random()*100);
-	   Order obj = new Order(id,"MyParcel" ,"Rohtak" ,"Chennai");
+	@PostMapping("/orderApi/createOrder/")
+	public Order createUser(@RequestBody Order obj) {
+//		int id =(int)(Math.random()*100);
+//	   Order obj = new Order(id,"MyParcel" ,"Rohtak" ,"Chennai");
 	   odao.createOrder(obj);
 		return obj;
 	}
@@ -40,9 +41,9 @@ public class SpringServiceOrderApplication {
 		return odao.deleteOrder(Integer.parseInt(id));
 	}
 	
-	@RequestMapping("/orderApi/updateOrder/{id}")
-	public Order updateOrder(@PathVariable("id") String id) {
-		Order obj = new Order(Integer.parseInt(id),"MyParcel" ,"Delhi" ,"Kolkata");
+	@PostMapping("/orderApi/updateOrder/{id}")
+	public Order updateOrder(@PathVariable("id") String id , @RequestBody Order obj) {
+		
 		if(odao.updateOrder(Integer.parseInt(id), obj) == null) {
 			System.err.println("ID doesn't Matched!!");
 		}
